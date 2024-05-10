@@ -1,0 +1,14 @@
+{
+  "name": "FLAT_SHARE_APPLICATION_SERVER",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Porgramming-Hero-web-course/l2-b2-fullstack-track-assignment-8-asifikbal09.git",
+  "author": "asifikbal09 <asif.ikbal662@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^20.12.11",
+    "prisma": "^5.13.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}
