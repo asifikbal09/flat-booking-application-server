@@ -6,6 +6,7 @@
   "author": "asifikbal09 <asif.ikbal662@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@prisma/client": "^5.13.0",
     "@types/node": "^20.12.11",
     "prisma": "^5.13.0",
     "ts-node": "^10.9.2",
