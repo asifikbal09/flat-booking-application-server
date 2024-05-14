@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Flat, Prisma } from "@prisma/client";
 import { paginationHelper } from "../../../shared/paginationHelper";
 import prisma from "../../../shared/prisma";
 import { IFlatPayload } from "./flat.interface";
@@ -70,7 +70,25 @@ const getAllFlatsFromDB = async (
   return { result, meta };
 };
 
+const updateFlatInfoIntoDB = async (id: string, payload: Partial<Flat>) => {
+  await prisma.flat.findUniqueOrThrow({
+    where: {
+      id,
+    },
+  });
+
+  const result = await prisma.flat.update({
+    where: {
+      id,
+    },
+    data: payload,
+  });
+
+  return result;
+};
+
 export const FlatServices = {
   createFlatIntoDB,
   getAllFlatsFromDB,
+  updateFlatInfoIntoDB
 };

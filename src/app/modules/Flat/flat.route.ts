@@ -19,4 +19,11 @@ router.get(
   FlatController.getAllFlat
 );
 
+router.put(
+  "/flats/:flatId",
+  auth(),
+  validateRequest(FlatValidation.updateFlatValidationSchema),
+  FlatController.updateFlat
+);
+
 export const FlatRoutes = router;
