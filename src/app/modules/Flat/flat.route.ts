@@ -14,4 +14,9 @@ router.post(
   FlatController.createFlat
 );
 
+router.get(
+  "/flats",
+  FlatController.getAllFlat
+);
+
 export const FlatRoutes = router;
