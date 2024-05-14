@@ -6,6 +6,8 @@ import config from "../../config";
 import { ZodError } from "zod";
 import handleZodError from "../error/handleZodError";
 import AppError from "../error/appError";
+import httpStatus from "http-status";
+import { JsonWebTokenError } from "jsonwebtoken";
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   let statusCode = 500;
@@ -18,14 +20,12 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     statusCode = getZodError?.statusCode;
     message = getZodError?.message;
   } 
- // else if (err instanceof jwt.JsonWebTokenError) {
-//     const gotJWTError = handelJWTError(err);
-//     statusCode = gotJWTError.statusCode;
-//     message = gotJWTError.message;
-//     errorMessage = gotJWTError.errorMessage;
-//     errorDetails = null;
-//     stack = null;
-//   } 
+ else if (err instanceof JsonWebTokenError) {
+    statusCode = httpStatus.BAD_REQUEST;
+    message = "Unauthorized Access";
+    errorDetails = err;
+    stack = null;
+  } 
 else if (err instanceof AppError) {
     statusCode = err?.statusCode;
     message = err?.message
