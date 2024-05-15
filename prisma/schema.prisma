@@ -63,7 +63,7 @@ model Booking {
   id        String        @id @default(uuid())
   flatId    String
   userId    String
-  status    BookingStatus @default(PANDING)
+  status    BookingStatus @default(PENDING)
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
 
@@ -74,7 +74,7 @@ model Booking {
 }
 
 enum BookingStatus {
-  PANDING
+  PENDING
   BOOKED
   REJECTED
 }

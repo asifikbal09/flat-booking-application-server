@@ -23,6 +23,12 @@ const createBookingIntoDB = async (
   return result;
 };
 
+const getAllBookingFromDB=async()=>{
+    const result = await prisma.booking.findMany()
+    return result
+}
+
 export const BookingServices = {
   createBookingIntoDB,
+  getAllBookingFromDB
 };
