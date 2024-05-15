@@ -1,4 +1,4 @@
-import express, { RequestHandler, Router } from "express";
+import { Router } from "express";
 import { UserController } from "./user.controller";
 import validateRequest from "../../middlewares/validationRequest";
 import { UserValidation } from "./user.validation";
