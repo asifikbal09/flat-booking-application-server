@@ -62,10 +62,12 @@ const getAllFlatsFromDB = async (
           },
   });
 
+  const total = await prisma.flat.count()
+
   const meta = {
     limit,
     page,
-    total: result.length,
+    total,
   };
   return { result, meta };
 };
