@@ -1,9 +1,9 @@
 import { Flat, Prisma } from "@prisma/client";
-import { paginationHelper } from "../../../shared/paginationHelper";
 import prisma from "../../../shared/prisma";
 import { IFlatPayload } from "./flat.interface";
 import { FlatsSearcherAbleFields } from "./flat.constant";
-import { boolean } from "zod";
+import { paginationHelper } from "../../../shared/paginationHelper";
+
 
 const createFlatIntoDB = async (payload: IFlatPayload) => {
   const result = await prisma.flat.create({
@@ -24,7 +24,7 @@ const getAllFlatsFromDB = async (
     sortOrder?: string | undefined;
   }
 ) => {
-  const { limit, page, skip } = paginationHelper.calculatePagination(options);
+  const { limit, page, skip,sortBy,sortOrder } = paginationHelper.calculatePagination(options);
 
   const { searchTerm, availability, ...filterData } = filters;
 

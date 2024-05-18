@@ -9,7 +9,7 @@ Whether you're a developer looking to understand how to implement a backend for 
 Let's dive into the details and get your server up and running!
 
 
-### Flats-sharing-application-live-link :
+### Flats-sharing-application-live-link : https://flat-sharing-aplication-server-site.vercel.app/
 
 ## Technology Stack
 
@@ -138,3 +138,107 @@ A JSON object containing the updated user details or an error message.
   - **Response**: JSON object with updated booking status.
 
 These routes provide the essential functionalities for user management, flat listing management, and booking processes in the Flat Sharing Application.
+
+
+## How to Run This Project Locally
+
+To run the Flat Sharing Backend Server locally, follow these steps:
+
+### Prerequisites
+
+Make sure you have the following software installed on your machine:
+- [Node.js](https://nodejs.org/en/download/) (v14 or higher)
+- [yarn](https://classic.yarnpkg.com/en/docs/install) (v1.22 or higher)
+- [PostgreSQL](https://www.postgresql.org/download/) or another supported database
+
+### Installation
+
+1. **Clone the repository**
+
+    ```sh
+    git clone https://github.com/yourusername/flat-sharing.git
+    cd flat-sharing
+    ```
+
+2. **Install dependencies**
+
+    ```sh
+    yarn install
+    ```
+
+3. **Set up Prisma**
+
+    Initialize Prisma:
+
+    ```sh
+    npx prisma init
+    ```
+
+    Edit the `prisma/schema.prisma` file to define your database schema. Then run:
+
+    ```sh
+    npx prisma migrate dev --name init
+    npx prisma generate
+    ```
+
+### Configuration
+
+Create a `.env` file in the root directory and add the following environment variables:
+
+```env
+NODE_ENV=development
+DATABASE_URL=your_database_url
+DIRECT_URL=your_direct_database_url
+PORT=5000
+SALT_ROUND=10
+ACCESS_TOKEN_SECRET=your_access_token_secret
+ACCESS_TOKEN_EXPIRE_IN=1h
+
+```
+
+
+- **`NODE_ENV`**: The environment in which the server is running (e.g., development, production).
+- **`DATABASE_URL`**: The connection string for your PostgreSQL database.
+- **`DIRECT_URL`**: The direct connection string for your PostgreSQL database.
+- **`PORT`**: The port on which the server will run (default is 5000).
+- **`SALT_ROUND`**: The number of salt rounds for bcrypt (default is 10).
+- **`ACCESS_TOKEN_SECRET`**: A secret key for signing JWT tokens.
+- **`ACCESS_TOKEN_EXPIRE_IN`**: The expiration time for JWT tokens (e.g., 1h for one hour).
+
+## Running the Server
+To start the server in development mode, use:
+
+```sh
+yarn dev
+
+```
+This command will use **`ts-node-dev`** to watch for file changes and automatically restart the server.
+
+## Testing the Endpoints
+You can test the API endpoints using tools like [Postman](https://www.postman.com/) or [Insomnia](https://insomnia.rest/). Import the provided Postman collection (`flat-sharing.postman_collection.json`) to get started quickly.
+
+## Building for Production
+To build the project for production, use:
+```sh
+yarn build
+
+```
+This command will compile the TypeScript code to JavaScript and output it to the dist directory. You can then start the server with:
+
+```sh
+yarn prod
+```
+## Additional Scripts
+**Linting**: To run ESLint and check for code issues, use:
+
+```sh
+yarn lint
+```
+**Prisma Studio**: To open Prisma Studio and manage your database visually, use:
+
+```sh
+npx prisma studio
+```
+
+## Conclusion
+Thank you for using the Flat Sharing Backend Server! This server provides a solid foundation for a flat-sharing application, offering essential features for user authentication, profile management, and flat listing functionalities. We hope this documentation has been helpful in setting up and understanding the backend server. If you have any questions or need further assistance, feel free to reach out.
