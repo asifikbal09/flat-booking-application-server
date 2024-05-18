@@ -236,11 +236,6 @@ This command will compile the TypeScript code to JavaScript and output it to the
 yarn prod
 ```
 ## Additional Scripts
-**Linting**: To run ESLint and check for code issues, use:
-
-```sh
-yarn lint
-```
 **Prisma Studio**: To open Prisma Studio and manage your database visually, use:
 
 ```sh

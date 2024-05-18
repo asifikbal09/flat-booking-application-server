@@ -1,0 +1,427 @@
+{
+	"info": {
+		"_postman_id": "6e328a19-258f-44de-bf52-38a777f8735e",
+		"name": "flat-sharing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31186588"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Asif Ikbal\",\r\n  \"email\": \"asif@mail.com\",\r\n  \"password\": \"123456\",\r\n  \"bio\":\"I am a very good boy\",\r\n  \"profession\":\"Student\",\r\n  \"address\":\"Dhaka Bangladesh\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"register"
+							]
+						},
+						"description": "The `POST /api/register` endpoint is used to register a new user. The request should include the user's name, email, password, bio, profession, and address in the request body.\n\n### Request Body\n\n- `name` (string): The name of the user.\n    \n- `email` (string): The email address of the user.\n    \n- `password` (string): The password for the user account.\n    \n- `bio` (string): A brief biography of the user.\n    \n- `profession` (string): The user's profession.\n    \n- `address` (string): The address of the user.\n    \n\n### Response\n\nThe response for this request is a JSON schema representing the structure of the response data."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n    \"email\": \"asif@mail.com\",\r\n    \"password\": \"123456\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Flat",
+			"item": [
+				{
+					"name": "Create flat",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n        \"squareFeet\": 940,\r\n        \"totalBedrooms\": 2,\r\n        \"totalRooms\": 4,\r\n        \"utilitiesDescription\": \"Includes water and garbage collection, tenant pays for electricity and gas.\",\r\n        \"location\": \"1717 Oakwood Ct, Suburb, Country\",\r\n        \"description\": \"Quiet apartment complex with a fitness center and pet-friendly policies.\",\r\n        \"rent\": 1350,\r\n        \"advanceAmount\": 2025\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/flats",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"flats"
+							]
+						},
+						"description": "The API endpoint `POST /api/flats` is used to create a new flat entry. The request should include the following parameters in the request body:\n\n- `squareFeet` (number): The total square feet area of the flat.\n    \n- `totalBedrooms` (number): The total number of bedrooms in the flat.\n    \n- `totalRooms` (number): The total number of rooms in the flat.\n    \n- `utilitiesDescription` (string): Description of the utilities available in the flat.\n    \n- `location` (string): The location of the flat.\n    \n- `description` (string): Description of the flat.\n    \n- `rent` (number): The rent amount for the flat.\n    \n- `advanceAmount` (number): The advance amount for the flat.\n    \n\nThe response of this request will be a JSON object conforming to the following schema:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"type\": \"string\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    },\n    \"flatId\": {\n      \"type\": \"string\"\n    }\n  }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all flats",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"squareFeet\": 1200,\r\n    \"totalBedrooms\": 2,\r\n    \"totalRooms\": 4,\r\n    \"utilitiesDescription\": \"Includes water and electricity\",\r\n    \"location\": \"123 Main Street, Cityville\",\r\n    \"description\": \"Cozy apartment with ample natural light and modern amenities.\",\r\n    \"rent\": 1500,\r\n    \"advanceAmount\": 2000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/flats",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"flats"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "5",
+									"disabled": true
+								},
+								{
+									"key": "availability",
+									"value": "false",
+									"disabled": true
+								},
+								{
+									"key": "searchTerm",
+									"value": "country",
+									"disabled": true
+								},
+								{
+									"key": "sortOrder",
+									"value": "desc",
+									"disabled": true
+								}
+							]
+						},
+						"description": "The API endpoint `POST /api/flats` is used to create a new flat entry. The request should include the following parameters in the request body:\n\n- `squareFeet` (number): The total square feet area of the flat.\n    \n- `totalBedrooms` (number): The total number of bedrooms in the flat.\n    \n- `totalRooms` (number): The total number of rooms in the flat.\n    \n- `utilitiesDescription` (string): Description of the utilities available in the flat.\n    \n- `location` (string): The location of the flat.\n    \n- `description` (string): Description of the flat.\n    \n- `rent` (number): The rent amount for the flat.\n    \n- `advanceAmount` (number): The advance amount for the flat.\n    \n\nThe response of this request will be a JSON object conforming to the following schema:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"type\": \"string\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    },\n    \"flatId\": {\n      \"type\": \"string\"\n    }\n  }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Flat Information",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n    \"location\": \"Shelter ABC\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/flats/:flatId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"flats",
+								":flatId"
+							],
+							"variable": [
+								{
+									"key": "flatId",
+									"value": ""
+								}
+							]
+						},
+						"description": "The API endpoint `POST /api/flats` is used to create a new flat entry. The request should include the following parameters in the request body:\n\n- `squareFeet` (number): The total square feet area of the flat.\n    \n- `totalBedrooms` (number): The total number of bedrooms in the flat.\n    \n- `totalRooms` (number): The total number of rooms in the flat.\n    \n- `utilitiesDescription` (string): Description of the utilities available in the flat.\n    \n- `location` (string): The location of the flat.\n    \n- `description` (string): Description of the flat.\n    \n- `rent` (number): The rent amount for the flat.\n    \n- `advanceAmount` (number): The advance amount for the flat.\n    \n\nThe response of this request will be a JSON object conforming to the following schema:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"type\": \"string\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    },\n    \"flatId\": {\n      \"type\": \"string\"\n    }\n  }\n}\n\n ```"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Booking",
+			"item": [
+				{
+					"name": "Create booking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"flatId\": \"b47f9802-30cd-4fb4-a9ea-2bdabf516583\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/booking-applications",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"booking-applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update booking status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"BOOKED\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/booking-requests/:bookingId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"booking-requests",
+								":bookingId"
+							],
+							"variable": [
+								{
+									"key": "bookingId",
+									"value": ""
+								}
+							]
+						},
+						"description": "### GET /api/booking-requests\n\nThis endpoint retrieves a list of booking requests.\n\n#### Request\n\nThe request should be sent as an HTTP GET to the following URL:\n\n```\nhttp://localhost:5000/api/booking-requests\n\n ```\n\nThe request body should be in raw format with the following payload:\n\n``` json\n{\n    \"flatId\": \"\"\n}\n\n ```\n\n#### Response\n\n- Status: 200\n    \n- Content-Type: application/json\n    \n\nThe response will be a JSON object with the following schema:\n\n``` json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"success\": {\n            \"type\": \"boolean\"\n        },\n        \"message\": {\n            \"type\": \"string\"\n        },\n        \"data\": {\n            \"type\": \"array\",\n            \"items\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"id\": {\n                        \"type\": \"string\"\n                    },\n                    \"flatId\": {\n                        \"type\": \"string\"\n                    },\n                    \"userId\": {\n                        \"type\": \"string\"\n                    },\n                    \"status\": {\n                        \"type\": \"string\"\n                    },\n                    \"createdAt\": {\n                        \"type\": \"string\"\n                    },\n                    \"updatedAt\": {\n                        \"type\": \"string\"\n                    }\n                }\n            }\n        }\n    }\n}\n\n ```\n\nThe `success` field indicates the success status of the request. The `message` field provides additional information about the response. The `data` field contains an array of booking request objects, each with an `id`, `flatId`, `userId`, `status`, `createdAt`, and `updatedAt` field."
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Booking",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/booking-requests",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"booking-requests"
+							]
+						},
+						"description": "### GET /api/booking-requests\n\nThis endpoint retrieves a list of booking requests.\n\n#### Request\n\nThe request should be sent as an HTTP GET to the following URL:\n\n```\nhttp://localhost:5000/api/booking-requests\n\n ```\n\nThe request body should be in raw format with the following payload:\n\n``` json\n{\n    \"flatId\": \"\"\n}\n\n ```\n\n#### Response\n\n- Status: 200\n    \n- Content-Type: application/json\n    \n\nThe response will be a JSON object with the following schema:\n\n``` json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"success\": {\n            \"type\": \"boolean\"\n        },\n        \"message\": {\n            \"type\": \"string\"\n        },\n        \"data\": {\n            \"type\": \"array\",\n            \"items\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"id\": {\n                        \"type\": \"string\"\n                    },\n                    \"flatId\": {\n                        \"type\": \"string\"\n                    },\n                    \"userId\": {\n                        \"type\": \"string\"\n                    },\n                    \"status\": {\n                        \"type\": \"string\"\n                    },\n                    \"createdAt\": {\n                        \"type\": \"string\"\n                    },\n                    \"updatedAt\": {\n                        \"type\": \"string\"\n                    }\n                }\n            }\n        }\n    }\n}\n\n ```\n\nThe `success` field indicates the success status of the request. The `message` field provides additional information about the response. The `data` field contains an array of booking request objects, each with an `id`, `flatId`, `userId`, `status`, `createdAt`, and `updatedAt` field."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Profile",
+			"item": [
+				{
+					"name": "Get user profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"bio\":\"I am a good boy\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://flat-sharing-aplication-server-site.vercel.app/api/profile",
+							"protocol": "https",
+							"host": [
+								"flat-sharing-aplication-server-site",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "userToken",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg1NzM5Yjc3LWQwYzEtNGY5Ni1hNmZlLTY4MjQ4ZDA4MjYwOCIsIm5hbWUiOiJBc2lmIElrYmFsIiwiZW1haWwiOiJhc2lmQG1haWwuY29tIiwiaWF0IjoxNzE2MDEyMzE5LCJleHAiOjE3MTYwOTg3MTl9.-FgyNf9-iarwHfqRn5J3-_RfKRW7SkGqmymbRKgoibM",
+			"type": "string"
+		}
+	]
+}
