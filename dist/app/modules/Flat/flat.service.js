@@ -24,9 +24,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FlatServices = void 0;
-const paginationHelper_1 = require("../../../shared/paginationHelper");
 const prisma_1 = __importDefault(require("../../../shared/prisma"));
 const flat_constant_1 = require("./flat.constant");
+const paginationHelper_1 = require("../../../shared/paginationHelper");
 const createFlatIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield prisma_1.default.flat.create({
         data: payload,
@@ -34,7 +34,7 @@ const createFlatIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function
     return result;
 });
 const getAllFlatsFromDB = (filters, options) => __awaiter(void 0, void 0, void 0, function* () {
-    const { limit, page, skip } = paginationHelper_1.paginationHelper.calculatePagination(options);
+    const { limit, page, skip, sortBy, sortOrder } = paginationHelper_1.paginationHelper.calculatePagination(options);
     const { searchTerm, availability } = filters, filterData = __rest(filters, ["searchTerm", "availability"]);
     const andConditions = [];
     if (filters.searchTerm) {

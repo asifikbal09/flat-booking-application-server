@@ -128,8 +128,15 @@ A JSON object containing the updated user details or an error message.
     - `flatId` (string): The ID of the flat to be booked.
   - **Response**: JSON object with booking details.
 
+- **Get All Booking**
+  - **Endpoint**: `GET /api/booking-requests`
+  - **Description**: Retrieved All booking requests.
+  - **Request Headers**:
+    - `Authorization` (string): Bearer token.
+  - **Response**: JSON array of object with booking details.
+
 - **Update Booking Status**
-  - **Endpoint**: `PUT /api/booking-requests/:id`
+  - **Endpoint**: `PUT /api/booking-requests/:bookingId`
   - **Description**: Updates the status of a booking request.
   - **Request Headers**:
     - `Authorization` (string): Bearer token.
