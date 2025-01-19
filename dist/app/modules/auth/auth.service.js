@@ -66,6 +66,27 @@ const loginAndGetToken = (payload) => __awaiter(void 0, void 0, void 0, function
     };
     return result;
 });
+const changeUserPasswordIntoDB = (userId, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield prisma_1.default.user.findUniqueOrThrow({
+        where: {
+            id: userId
+        }
+    });
+    const isPasswordCorrect = yield brcypt.compare(payload.currentPassword, user.password);
+    if (!isPasswordCorrect) {
+        throw new appError_1.default(http_status_1.default.BAD_REQUEST, "Incorrect Password.");
+    }
+    const hashedPassword = yield brcypt.hash(payload.newPassword, config_1.default.saltRound);
+    yield prisma_1.default.user.update({
+        where: {
+            id: userId
+        },
+        data: {
+            password: hashedPassword
+        }
+    });
+});
 exports.AuthServices = {
     loginAndGetToken,
+    changeUserPasswordIntoDB
 };

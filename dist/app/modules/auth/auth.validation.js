@@ -14,6 +14,17 @@ const loginValidationSchema = zod_1.z.object({
         }),
     }),
 });
+const changePasswordValidationSchema = (zod_1.z.object({
+    body: zod_1.z.object({
+        currentPassword: zod_1.z.string({
+            required_error: "Current password is required.",
+        }),
+        newPassword: zod_1.z.string({
+            required_error: "New password is required.",
+        }),
+    }),
+}));
 exports.AuthValidations = {
     loginValidationSchema,
+    changePasswordValidationSchema
 };
