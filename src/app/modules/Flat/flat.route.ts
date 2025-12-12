@@ -3,13 +3,14 @@ import validateRequest from "../../middlewares/validationRequest";
 import { FlatValidation } from "./flat.validation";
 import auth from "../../middlewares/auth";
 import { FlatController } from "./flat.controller";
+import { UserRole } from "@prisma/client";
 
 
 const router = Router();
 
 router.post(
   "/flats",
-  auth(),
+  auth([UserRole.ADMIN, UserRole.USER]),
   validateRequest(FlatValidation.createFlatValidationSchema),
   FlatController.createFlat
 );
@@ -21,7 +22,7 @@ router.get(
 
 router.put(
   "/flats/:flatId",
-  auth(),
+  auth([UserRole.ADMIN, UserRole.USER]),
   validateRequest(FlatValidation.updateFlatValidationSchema),
   FlatController.updateFlat
 );

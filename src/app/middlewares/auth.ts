@@ -6,7 +6,7 @@ import { jwtHelpers } from "../../shared/jwtHelper";
 import config from "../../config";
 
 
-const auth = () => {
+const auth = ([roles]: string[]) => {
     return async (req: Request & { user?: any }, res: Response, next: NextFunction) => {
         try {
             const token = req.headers.authorization
@@ -16,6 +16,10 @@ const auth = () => {
             }
 
             const verifiedUser = jwtHelpers.verifyToken(token, config.tokenSecret as Secret)
+
+            if (roles.length && !roles.includes(verifiedUser.role)) {
+                throw new AppError(httpStatus.FORBIDDEN, "Forbidden Access!")
+            }
 
             req.user = verifiedUser;
 

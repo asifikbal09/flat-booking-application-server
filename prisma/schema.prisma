@@ -11,12 +11,12 @@ generator client {
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
 }
 
 model User {
   id          String       @id @default(uuid())
   name        String
+  role        UserRole    @default(USER)
   email       String       @unique
   password    String
   createdAt   DateTime     @default(now())
@@ -30,6 +30,7 @@ model User {
 model UserProfile {
   id         String   @id @default(uuid())
   userId     String   @unique
+  imageUrl   String?
   bio        String
   profession String
   address    String
@@ -46,6 +47,7 @@ model Flat {
   squareFeet           Int
   totalBedrooms        Int
   totalRooms           Int
+  imageUrls           String[]
   utilitiesDescription String
   location             String
   description          String
@@ -77,4 +79,9 @@ enum BookingStatus {
   PENDING
   BOOKED
   REJECTED
+}
+
+enum UserRole {
+  ADMIN
+  USER
 }

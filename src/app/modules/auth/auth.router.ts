@@ -3,6 +3,7 @@ import { AuthValidations } from "./auth.validation";
 import validateRequest from "../../middlewares/validationRequest";
 import { AuthController } from "./auth.controller";
 import auth from "../../middlewares/auth";
+import { UserRoles } from "../User/user.constant";
 
 
 const router = Router();
@@ -15,7 +16,7 @@ router.post(
 
 router.post(
   "/change-password",
-  auth(),
+  auth([UserRoles.ADMIN,UserRoles.USER]),
   validateRequest(AuthValidations.changePasswordValidationSchema),
   AuthController.changeUserPassword
 )

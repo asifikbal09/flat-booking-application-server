@@ -5,14 +5,7 @@ export type IUserPayload = {
   bio: string;
   profession: string;
   address: string;
+  imageUrl?: string;
+  role?: "USER" | "ADMIN";
 };
-/**
- * {
-  "name": "John Doe",
-  "email": "johndoeexample.com",
-  "password": "securepassword",
-  "bio":"My Bio",
-  "profession":"Developer",
-  "address":"Permanent Address"
-}
- */
+

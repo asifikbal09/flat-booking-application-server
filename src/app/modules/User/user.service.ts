@@ -6,11 +6,17 @@ import { IUserPayload } from "./user.interface";
 import * as brcypt from "bcrypt";
 
 const createUserIntoDB = async (payload: IUserPayload) => {
+  const { name,role, email, password, bio, profession, address, imageUrl } = payload;
+  const isUserExist = await prisma.user.findUnique({ where: { email } });
+
+  if (isUserExist) {
+    throw new AppError(httpStatus.CONFLICT, "User already exist with this email.");
+  }
   const result = await prisma.$transaction(async (transactionClint) => {
-    const { name, email, password, bio, profession, address } = payload;
     const hashPassword = await brcypt.hash(password, Number(config.saltRound));
     const userInfo = {
       name,
+      role: role||"USER",
       email,
       password: hashPassword,
     };
@@ -28,6 +34,7 @@ const createUserIntoDB = async (payload: IUserPayload) => {
       bio,
       profession,
       address,
+      imageUrl: imageUrl || "asifikbal.jpg",
     };
 
     await transactionClint.userProfile.create({ data: userProfileInfo });

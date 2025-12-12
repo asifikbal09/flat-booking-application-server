@@ -2,11 +2,22 @@ import { UserProfile } from "@prisma/client";
 import prisma from "../../../shared/prisma";
 
 const getUserProfileFromDB = async ({ id }: { id: string }) => {
-  const result = await prisma.userProfile.findUniqueOrThrow({
+  const userInfo = await prisma.user.findUniqueOrThrow({
+    where: { id },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+  const userProfile = await prisma.userProfile.findUniqueOrThrow({
     where: {
       userId: id,
     },
   });
+  const result = { ...userInfo, ...userProfile };
   return result;
 };
 

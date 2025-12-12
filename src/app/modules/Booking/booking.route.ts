@@ -4,6 +4,7 @@ import { BookingController } from "./booking.controller";
 import auth from "../../middlewares/auth";
 import validateRequest from "../../middlewares/validationRequest";
 import { BookingValidation } from "./booking.validation";
+import { UserRole } from "@prisma/client";
 
 
 
@@ -11,20 +12,20 @@ const router = Router();
 
 router.post(
   "/booking-applications",
-  auth(),
+  auth([UserRole.ADMIN, UserRole.USER]),
   validateRequest(BookingValidation.createBookingValidationSchema),
   BookingController.createBooking
 );
 
 router.get(
   "/booking-requests",
-  auth(),
+  auth([UserRole.ADMIN, UserRole.USER]),
   BookingController.getAllBooking
 );
 
 router.put(
   "/booking-requests/:bookingId",
-  auth(),
+  auth([UserRole.ADMIN]),
   validateRequest(BookingValidation.updateBookingValidationSchema),
   BookingController.updateBookingStatus
 );

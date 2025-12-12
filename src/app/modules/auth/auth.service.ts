@@ -24,7 +24,7 @@ const loginAndGetToken = async (payload: ILoginPayload) => {
 
   const jwtPayload = {
     id: user.id,
-    name: user.name,
+    role:user.role,
     email: user.email,
   };
 
