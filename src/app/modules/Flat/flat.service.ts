@@ -4,7 +4,6 @@ import { IFlatPayload } from "./flat.interface";
 import { FlatsSearcherAbleFields } from "./flat.constant";
 import { paginationHelper } from "../../../shared/paginationHelper";
 
-
 const createFlatIntoDB = async (payload: IFlatPayload) => {
   const result = await prisma.flat.create({
     data: payload,
@@ -24,7 +23,8 @@ const getAllFlatsFromDB = async (
     sortOrder?: string | undefined;
   }
 ) => {
-  const { limit, page, skip,sortBy,sortOrder } = paginationHelper.calculatePagination(options);
+  const { limit, page, skip, sortBy, sortOrder } =
+    paginationHelper.calculatePagination(options);
 
   const { searchTerm, availability, ...filterData } = filters;
 
@@ -62,7 +62,7 @@ const getAllFlatsFromDB = async (
           },
   });
 
-  const total = await prisma.flat.count()
+  const total = await prisma.flat.count();
 
   const meta = {
     limit,
@@ -70,6 +70,15 @@ const getAllFlatsFromDB = async (
     total,
   };
   return { result, meta };
+};
+
+const getSingleFlatFromDB = async (id: string) => {
+  const result = await prisma.flat.findUniqueOrThrow({
+    where: {
+      id,
+    },
+  });
+  return result;
 };
 
 const updateFlatInfoIntoDB = async (id: string, payload: Partial<Flat>) => {
@@ -92,5 +101,6 @@ const updateFlatInfoIntoDB = async (id: string, payload: Partial<Flat>) => {
 export const FlatServices = {
   createFlatIntoDB,
   getAllFlatsFromDB,
-  updateFlatInfoIntoDB
+  updateFlatInfoIntoDB,
+  getSingleFlatFromDB,
 };

@@ -15,7 +15,6 @@ const createUserIntoDB = async (payload: IUserPayload) => {
   const result = await prisma.$transaction(async (transactionClint) => {
     const hashPassword = await brcypt.hash(password, Number(config.saltRound));
     const userInfo = {
-      name,
       role: role||"USER",
       email,
       password: hashPassword,
@@ -31,6 +30,7 @@ const createUserIntoDB = async (payload: IUserPayload) => {
 
     const userProfileInfo = {
       userId: (await newUser).id,
+      name,
       bio,
       profession,
       address,
@@ -48,7 +48,6 @@ const createUserIntoDB = async (payload: IUserPayload) => {
     },
     select: {
       id: true,
-      name: true,
       email: true,
       createdAt: true,
       updatedAt: true,

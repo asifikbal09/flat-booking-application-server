@@ -9,14 +9,13 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
   id          String       @id @default(uuid())
-  name        String
-  role        UserRole    @default(USER)
+  role        UserRole     @default(USER)
   email       String       @unique
   password    String
   createdAt   DateTime     @default(now())
@@ -29,6 +28,7 @@ model User {
 
 model UserProfile {
   id         String   @id @default(uuid())
+  name       String
   userId     String   @unique
   imageUrl   String?
   bio        String
@@ -44,10 +44,11 @@ model UserProfile {
 
 model Flat {
   id                   String    @id @default(uuid())
+  title                String    @default("Luxury Loft with Terrace")
   squareFeet           Int
   totalBedrooms        Int
   totalRooms           Int
-  imageUrls           String[]
+  imageUrls            String[]
   utilitiesDescription String
   location             String
   description          String
