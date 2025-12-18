@@ -26,6 +26,12 @@ router.get(
   BookingController.getBookingSingleUser
 );
 
+router.get(
+  "/booking-requests/user/flats",
+  auth([UserRole.ADMIN, UserRole.USER]),
+  BookingController.getUserFlatsAllBooking
+);
+
 router.put(
   "/booking-requests/:bookingId",
   auth([UserRole.ADMIN]),

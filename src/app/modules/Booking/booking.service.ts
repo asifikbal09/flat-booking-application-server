@@ -61,6 +61,28 @@ const getBookingSingleUserFromDB = async (userId: string) => {
   return result;
 };
 
+const getUserFlatsAllBookingFromDB = async (userId: string) => {
+  const result = await prisma.flat.findMany({
+    where: {
+      userId,
+    },
+    include: {
+      booking: {
+        include: {
+          user: {
+            select: {
+              id: true,
+              email: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return result;
+};
+
 const updateBookingFromDB = async (
   id: string,
   payload: { status: BookingStatus }
@@ -88,4 +110,5 @@ export const BookingServices = {
   getAllBookingFromDB,
   updateBookingFromDB,
   getBookingSingleUserFromDB,
+  getUserFlatsAllBookingFromDB,
 };
