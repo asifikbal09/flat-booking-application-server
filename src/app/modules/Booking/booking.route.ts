@@ -1,12 +1,9 @@
-
 import { Router } from "express";
 import { BookingController } from "./booking.controller";
 import auth from "../../middlewares/auth";
 import validateRequest from "../../middlewares/validationRequest";
 import { BookingValidation } from "./booking.validation";
 import { UserRole } from "@prisma/client";
-
-
 
 const router = Router();
 
@@ -21,6 +18,12 @@ router.get(
   "/booking-requests",
   auth([UserRole.ADMIN, UserRole.USER]),
   BookingController.getAllBooking
+);
+
+router.get(
+  "/booking-requests/user",
+  auth([UserRole.ADMIN, UserRole.USER]),
+  BookingController.getBookingSingleUser
 );
 
 router.put(

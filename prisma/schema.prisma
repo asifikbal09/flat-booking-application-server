@@ -22,6 +22,7 @@ model User {
   updatedAt   DateTime     @updatedAt
   userProfile UserProfile?
   booking     Booking[]
+  flats       Flat[]
 
   @@map("users")
 }
@@ -44,7 +45,7 @@ model UserProfile {
 
 model Flat {
   id                   String    @id @default(uuid())
-  title                String    @default("Luxury Loft with Terrace")
+  title                String
   squareFeet           Int
   totalBedrooms        Int
   totalRooms           Int
@@ -58,17 +59,24 @@ model Flat {
   createdAt            DateTime  @default(now())
   updatedAt            DateTime  @updatedAt
   booking              Booking[]
+  userId               String
+
+  user User @relation(fields: [userId], references: [id])
 
   @@map("flats")
 }
 
 model Booking {
-  id        String        @id @default(uuid())
-  flatId    String
-  userId    String
-  status    BookingStatus @default(PENDING)
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
+  id             String        @id @default(uuid())
+  flatId         String
+  userId         String
+  status         BookingStatus @default(PENDING)
+  message        String?
+  moveInDate     String
+  duration       String
+  numberOfPeople Int
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
 
   flat Flat @relation(fields: [flatId], references: [id])
   user User @relation(fields: [userId], references: [id])

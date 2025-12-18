@@ -4,7 +4,13 @@ import { BookingStatus } from "@prisma/client";
 
 const createBookingIntoDB = async (
   user: JwtPayload,
-  payload: { flatId: string }
+  payload: {
+    flatId: string;
+    moveInDate: string;
+    duration: string;
+    numberOfPeople: number;
+    message: string | null;
+  }
 ) => {
   const { flatId } = payload;
   await prisma.flat.findUniqueOrThrow({
@@ -14,18 +20,44 @@ const createBookingIntoDB = async (
   });
   const bookingInfo = {
     userId: user.id,
-    flatId,
+    flatId: payload.flatId,
+    moveInDate: payload.moveInDate,
+    duration: payload.duration,
+    numberOfPeople: payload.numberOfPeople,
+    message: payload.message,
   };
 
   const result = await prisma.booking.create({
     data: bookingInfo,
+    include: {
+      user: true,
+      flat: true,
+    },
   });
 
   return result;
 };
 
 const getAllBookingFromDB = async () => {
-  const result = await prisma.booking.findMany();
+  const result = await prisma.booking.findMany({
+    include: {
+      user: true,
+      flat: true,
+    },
+  });
+  return result;
+};
+
+const getBookingSingleUserFromDB = async (userId: string) => {
+  const result = await prisma.booking.findMany({
+    where: {
+      userId,
+    },
+    include: {
+      user: true,
+      flat: true,
+    },
+  });
   return result;
 };
 
@@ -43,6 +75,10 @@ const updateBookingFromDB = async (
       id,
     },
     data: payload,
+    include: {
+      user: true,
+      flat: true,
+    },
   });
   return result;
 };
@@ -51,4 +87,5 @@ export const BookingServices = {
   createBookingIntoDB,
   getAllBookingFromDB,
   updateBookingFromDB,
+  getBookingSingleUserFromDB,
 };

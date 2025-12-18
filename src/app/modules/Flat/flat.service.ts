@@ -15,6 +15,7 @@ const getAllFlatsFromDB = async (
   filters: {
     searchTerm?: string | undefined;
     availability?: string | undefined;
+    userId?: string | undefined;
   },
   options: {
     page?: number;
@@ -45,11 +46,19 @@ const getAllFlatsFromDB = async (
       availability: filters.availability == "false" ? false : true,
     });
   }
+  if (filters.userId) {
+    andConditions.push({
+      userId: filters.userId,
+    });
+  }
 
   const whereConditions: Prisma.FlatWhereInput = { AND: andConditions };
 
   const result = await prisma.flat.findMany({
     where: whereConditions,
+    include: {
+      user: true,
+    },
     skip,
     take: limit,
     orderBy:
@@ -73,11 +82,20 @@ const getAllFlatsFromDB = async (
 };
 
 const getSingleFlatFromDB = async (id: string) => {
-  const result = await prisma.flat.findUniqueOrThrow({
+  const singleFlat = await prisma.flat.findUniqueOrThrow({
     where: {
       id,
     },
   });
+  const owner = await prisma.userProfile.findUniqueOrThrow({
+    where: {
+      userId: singleFlat.userId,
+    },
+  });
+  const result = {
+    ...singleFlat,
+    owner,
+  };
   return result;
 };
 
@@ -98,9 +116,27 @@ const updateFlatInfoIntoDB = async (id: string, payload: Partial<Flat>) => {
   return result;
 };
 
+const deleteFlatFromDB = async (id: string) => {
+  const isFlatExist = await prisma.flat.findUniqueOrThrow({
+    where: {
+      id,
+    },
+  });
+  if (!isFlatExist) {
+    throw new Error("Flat not found");
+  }
+  const result = await prisma.flat.delete({
+    where: {
+      id,
+    },
+  });
+  return result;
+};
+
 export const FlatServices = {
   createFlatIntoDB,
   getAllFlatsFromDB,
   updateFlatInfoIntoDB,
   getSingleFlatFromDB,
+  deleteFlatFromDB,
 };

@@ -6,6 +6,8 @@ import pick from "../../../shared/pick";
 import { FlatsFilterAbleFields } from "./flat.constant";
 
 const createFlat = catchAsync(async (req, res) => {
+  const userId = req.user.id;
+  req.body.userId = userId;
   const result = await FlatServices.createFlatIntoDB(req.body);
 
   sendResponse(res, {
@@ -56,9 +58,22 @@ const updateFlat = catchAsync(async (req, res) => {
   });
 });
 
+const deleteFlat = catchAsync(async (req, res) => {
+  const { flatId } = req.params;
+  const result = await FlatServices.deleteFlatFromDB(flatId);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Flat deleted successfully",
+    data: result,
+  });
+});
+
 export const FlatController = {
   createFlat,
   getAllFlat,
   updateFlat,
   getSingleFlat,
+  deleteFlat,
 };

@@ -8,4 +8,5 @@ export type IFlatPayload = {
   description: string;
   rent: number;
   advanceAmount: number;
+  userId: string;
 };

@@ -1,4 +1,4 @@
-export const FlatsFilterAbleFields = ["searchTerm", "availability"];
+export const FlatsFilterAbleFields = ["searchTerm", "availability", "userId"];
 
 export const FlatsSearcherAbleFields = [
   "title",

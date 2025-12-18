@@ -24,7 +24,7 @@ const loginAndGetToken = async (payload: ILoginPayload) => {
 
   const jwtPayload = {
     id: user.id,
-    role:user.role,
+    role: user.role,
     email: user.email,
   };
 
@@ -35,40 +35,48 @@ const loginAndGetToken = async (payload: ILoginPayload) => {
   );
   const result = {
     id: user.id,
-    name: user.name,
     email: user.email,
     token,
   };
 
-  return result
+  return result;
 };
 
-const changeUserPasswordIntoDB = async (userId:string,payload:IChangePasswordPayload)=>{
-    const user = await prisma.user.findUniqueOrThrow({
-        where:{
-            id:userId
-        }
-    })
+const changeUserPasswordIntoDB = async (
+  userId: string,
+  payload: IChangePasswordPayload
+) => {
+  const user = await prisma.user.findUniqueOrThrow({
+    where: {
+      id: userId,
+    },
+  });
 
-    const isPasswordCorrect = await brcypt.compare(payload.currentPassword,user.password)
+  const isPasswordCorrect = await brcypt.compare(
+    payload.currentPassword,
+    user.password
+  );
 
-    if(!isPasswordCorrect){
-        throw new AppError(httpStatus.BAD_REQUEST,"Incorrect Password.")
-    }
+  if (!isPasswordCorrect) {
+    throw new AppError(httpStatus.BAD_REQUEST, "Incorrect Password.");
+  }
 
-    const hashedPassword = await brcypt.hash(payload.newPassword,config.saltRound)
+  const hashedPassword = await brcypt.hash(
+    payload.newPassword,
+    config.saltRound
+  );
 
-    await prisma.user.update({
-        where:{
-            id:userId
-        },
-        data:{
-            password:hashedPassword
-        }
-    })
-}
+  await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      password: hashedPassword,
+    },
+  });
+};
 
 export const AuthServices = {
   loginAndGetToken,
-  changeUserPasswordIntoDB
+  changeUserPasswordIntoDB,
 };
