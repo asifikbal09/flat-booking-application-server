@@ -12,6 +12,7 @@ const auth = ([...roles]: string[]) => {
     next: NextFunction
   ) => {
     try {
+      // console.log(roles);
       const token = req.headers.authorization;
 
       if (!token) {
@@ -22,6 +23,8 @@ const auth = ([...roles]: string[]) => {
         token,
         config.tokenSecret as Secret
       );
+
+      // console.log(verifiedUser);
 
       if (roles.length && !roles.includes(verifiedUser.role)) {
         throw new AppError(httpStatus.FORBIDDEN, "Forbidden Access!");

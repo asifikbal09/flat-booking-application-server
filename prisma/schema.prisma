@@ -81,6 +81,7 @@ model Booking {
   flat Flat @relation(fields: [flatId], references: [id])
   user User @relation(fields: [userId], references: [id])
 
+  @@unique([flatId, userId])
   @@map("bookings")
 }
 

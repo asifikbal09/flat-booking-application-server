@@ -34,7 +34,7 @@ router.get(
 
 router.put(
   "/booking-requests/:bookingId",
-  auth([UserRole.ADMIN]),
+  auth([UserRole.ADMIN, UserRole.USER]),
   validateRequest(BookingValidation.updateBookingValidationSchema),
   BookingController.updateBookingStatus
 );

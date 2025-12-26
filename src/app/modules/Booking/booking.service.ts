@@ -1,6 +1,8 @@
 import { JwtPayload } from "jsonwebtoken";
 import prisma from "../../../shared/prisma";
 import { BookingStatus } from "@prisma/client";
+import AppError from "../../error/appError";
+import httpStatus from "http-status";
 
 const createBookingIntoDB = async (
   user: JwtPayload,
@@ -62,25 +64,36 @@ const getBookingSingleUserFromDB = async (userId: string) => {
 };
 
 const getUserFlatsAllBookingFromDB = async (userId: string) => {
-  const result = await prisma.flat.findMany({
+  const isUsrExist = await prisma.user.findUniqueOrThrow({
+    where: {
+      id: userId,
+    },
+  });
+  if (!isUsrExist) {
+    throw new AppError(httpStatus.NOT_FOUND, "User not found");
+  }
+  const userFlats = await prisma.flat.findMany({
     where: {
       userId,
     },
-    include: {
-      booking: {
-        include: {
-          user: {
-            select: {
-              id: true,
-              email: true,
-            },
-          },
+  });
+  if (userFlats.length) {
+    const flatIds = userFlats.map((flat) => flat.id);
+    const result = await prisma.booking.findMany({
+      where: {
+        flatId: {
+          in: flatIds,
         },
       },
-    },
-  });
+      include: {
+        user: true,
+        flat: true,
+      },
+    });
+    return result;
+  }
 
-  return result;
+  return [];
 };
 
 const updateBookingFromDB = async (
